@@ -1,6 +1,8 @@
 
     SERVIDOR
     
+        - Windows forms (acciones simples + log visual)
+    
         - El servidor tiene que tener el estado del bar (y no depender de los trabajadores)
         - Empieza con 0 trabajadores,
           cuando estos se loguean se añaden
@@ -12,9 +14,14 @@
     
         - Cosas generales
         
+            - Coge la ip del servidor automáticamente (fija o explorando?)
             - Un trabajador puede pedir que se le asignen las tareas de otro
-            - Cuando se cierra la app no se guarda nada
+            - Cuando se cierra la app no se guarda nada (a menos que se esté en medio de realizar una acción)
             - Cuando se abre la app, se pide al servidor las tareas
+            - Cuando se empieza a realizar una acción, se guarda en almacenamiento cada cosa que se haga,
+              si el envío al servidor se hace bien, todo correcto,
+              si no se completa el envío, tendrás las opciones de reintentar o de cerrar la app
+              si se cierra la app, se guarda todo y se cierra
 
         - Login (para diferenciar trabajadores)
         
@@ -39,12 +46,14 @@
         
                 - Tareas
                 
-                    - Cosas que hacer asignadas por el servidor
-                    - Ordenadas por tiempo transcurrido
+                    - Cosas que hacer
+                    - Asignadas por el servidor
+                    - Ordenadas por tiempo transcurrido (descendente)
                     
                 - Acciones
                 
                     - Cuando el trabajador quiere hacer o ha hecho algo
+                    - Dependen del rol
                     - (terminar una preparación, cobrar, tomar nota...)
             
             - Carta

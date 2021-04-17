@@ -13,10 +13,7 @@
         
         3. Formación (5 días)
         
-            - Tecnologías necesarias
-        
-                - Xamarin (aplicación cliente (camareros, baristas, cocineros...))
-                - _______ (conexión entre cliente y servidor (gestor))
+            - Tecnologías necesarias (Xamarin, conexión inalámbrica...)
             
         4. Programación (10 días)
         

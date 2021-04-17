@@ -1,0 +1,10 @@
+
+    Xamarin
+    
+        - Pantalla de carga
+        - Conexión inalámbrica (pillar ip fija o explorar (?))
+        - Navegación
+        - Drawer
+        - Tabs
+        
+    Método de comuniación inalámbrica
