@@ -1,17 +1,17 @@
 
     PFG (30 días) (25 días reales)
 
-        1. Investigación (2 días)
+        1. Investigación (1 días)
         
             - Problemas a solucionar
             - Aplicaciones similares
             
-        2. Definición (2 días)
+        2. Definición (1 días)
         
             - Cómo voy a solicionar el problema
             - Qué necesito para realizarlo
         
-        3. Formación (3 días)
+        3. Formación (5 días)
         
             - Tecnologías necesarias
         
@@ -23,3 +23,4 @@
         5. Pruebas y solución de bugs (4 días)
         
         6. Documentación (4 días)
+

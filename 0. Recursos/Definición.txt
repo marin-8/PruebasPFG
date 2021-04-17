@@ -1,0 +1,60 @@
+
+    SERVIDOR
+    
+        - El servidor tiene que tener el estado del bar (y no depender de los trabajadores)
+        - Empieza con 0 trabajadores,
+          cuando estos se loguean se añaden
+          y cuando se desconectan, se marcan como desconectados pero no se eliminan (se conservan sus pedidos)
+        - Manejar pérdidas de conexión
+        - Loguea todo (añade a lista y escribe lista en txt cuando se cierra)
+
+    APP
+    
+        - Cosas generales
+        
+            - Un trabajador puede pedir que se le asignen las tareas de otro
+            - Cuando se cierra la app no se guarda nada
+            - Cuando se abre la app, se pide al servidor las tareas
+
+        - Login (para diferenciar trabajadores)
+        
+            - 1 usuario administrador que no se puede borrar
+            
+            - Al entrar en la app, hay que hacer login con un usuario creado por el admin o por el gestor
+            
+            - Roles:
+                - 1 - Administrador
+                - 2 - Gestor
+                - 3 - Camarero
+                - 3 - Barista
+                - 3 - Cocinero
+                
+            - Cada rol tiene sus permisos
+                
+            - Justo al hacer login, rebalancear las tareas no empezadas
+                
+        - Drawer
+        
+            - Trabajo (2 pestañas)
+        
+                - Tareas
+                
+                    - Cosas que hacer asignadas por el servidor
+                    - Ordenadas por tiempo transcurrido
+                    
+                - Acciones
+                
+                    - Cuando el trabajador quiere hacer o ha hecho algo
+                    - (terminar una preparación, cobrar, tomar nota...)
+            
+            - Carta
+            
+                - Dividido por categorías
+        
+            - Mesas
+            
+                - Dividido por zonas
+                - Lista (nombre)
+                - (en el futuro) Mapa
+            
+
