@@ -7,4 +7,25 @@
         - Drawer
         - Tabs
         
-    Método de comuniación inalámbrica
+        - Microsoft Docs:
+        
+            - Controls (Pages, Layouts, Views, Cells): https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/controls/
+        
+        - Youtube:
+        
+            - Oficial: https://youtube.com/playlist?list=PLdo4fOcmZ0oU10SXt2W58pu2L0v2dOW-1
+            - Otro 1: https://youtube.com/playlist?list=PLV916idiqLvcKS1JY3S3jHWx9ELGJ1cJB
+        
+    TCP Listener/Client (async)
+
+        - Youtube: https://youtu.be/Bq1JhTHlxek
+
+        - Server: https://docs.microsoft.com/en-us/dotnet/api/system.net.sockets.tcplistener?view=net-5.0
+        - Client: https://docs.microsoft.com/en-us/dotnet/api/system.net.sockets.tcpclient?view=net-5.0
+        
+        - Moodle (PSP)
+        
+        - Otros ejemplos:
+        
+            https://docs.microsoft.com/en-us/dotnet/framework/network-programming/asynchronous-server-socket-example
+            https://docs.microsoft.com/en-us/dotnet/framework/network-programming/asynchronous-client-socket-example
