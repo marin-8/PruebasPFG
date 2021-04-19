@@ -10,6 +10,7 @@
         - Microsoft Docs:
         
             - Controls (Pages, Layouts, Views, Cells): https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/controls/
+            - Controls (Views): https://docs.microsoft.com/en-us/xamarin/xamarin-forms/xaml/xaml-controls
         
         - Youtube:
         
