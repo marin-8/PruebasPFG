@@ -1,3 +1,0 @@
-C:\GitHub\PFG-DAM\2. Codigo\PFG_Daniel_Marin\PruebasRandom.Cliente\PruebasRandom.Cliente.Android\obj\Debug\60\MonoAndroid,Version=v6.0.AssemblyAttributes.cs
-C:\GitHub\PFG-DAM\2. Codigo\PFG_Daniel_Marin\PruebasRandom.Cliente\PruebasRandom.Cliente.Android\obj\Debug\60\build.props
-C:\GitHub\PFG-DAM\2. Codigo\PFG_Daniel_Marin\PruebasRandom.Cliente\PruebasRandom.Cliente.Android\obj\Debug\60\adb.props

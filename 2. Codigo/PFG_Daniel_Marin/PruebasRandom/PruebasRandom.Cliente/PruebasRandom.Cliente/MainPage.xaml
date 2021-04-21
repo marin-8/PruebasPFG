@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="PruebasRandom.Cliente.MainPage">
+
+    <StackLayout Margin="20">
+
+        <Entry
+            x:Name="IP"
+            Placeholder="IP (Ejemplo: 000.000.000.000)"
+            Text="192.168.1.136"
+            HorizontalTextAlignment="Center"
+            FontSize="Title">
+        </Entry>
+
+        <Entry
+            x:Name="PORT"
+            Placeholder="PORT (Ejemplo: 12345)"
+            Text="1600"
+            HorizontalTextAlignment="Center"
+            Keyboard="Numeric"
+            FontSize="Title">
+        </Entry>
+
+        <BoxView
+            BackgroundColor="Transparent"
+            HeightRequest="20">
+        </BoxView>
+
+        <ListView
+            x:Name="ListaMensajes">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="17*" />
+                                <ColumnDefinition Width="10*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Text="{Binding Mensaje}"   Grid.Column="0" Grid.Row="0" FontSize="Small"></Label>
+                            <Label Text="{Binding FechaHora}" Grid.Column="1" Grid.Row="1" FontSize="Small"></Label>
+
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+     
+        </ListView>
+
+        <Entry
+            x:Name="MensajeEnviar"
+            Placeholder="Escribir un mensaje"
+            Text="hey"
+            FontSize="Title">
+        </Entry>
+
+        <Button
+            x:Name="Enviar"
+            Text="Enviar"
+            FontSize="Title"
+            FontAttributes="Bold"
+            HeightRequest="80"
+            Clicked="EnviarClicked">
+        </Button>
+
+    </StackLayout>
+
+</ContentPage>
