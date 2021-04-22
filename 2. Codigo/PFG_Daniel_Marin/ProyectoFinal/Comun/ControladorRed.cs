@@ -7,9 +7,15 @@ using System.Threading;
 
 namespace ProyectoFinal.Comun
 {
-	public static class ControladorRed
+	public class ControladorRed
 	{
 		private const ushort MAX_BUFFER_SIZE = 300;
+
+		private readonly byte[] Buffer = new byte[MAX_BUFFER_SIZE];
+
+		private readonly Socket Servidor = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+		private Action FuncionAlRecibir;
 
 		public static int Enviar(string IP, ushort PORT, string Mensaje)
 		{
@@ -23,6 +29,26 @@ namespace ProyectoFinal.Comun
 
 			return intentosDeConexion;
 		}
+
+		public ControladorRed(string IP, ushort PORT, Action FuncionAlRecibir)
+		{
+			Servidor.Bind(new IPEndPoint(IPAddress.Parse(IP), PORT));
+			this.FuncionAlRecibir = FuncionAlRecibir;
+		}
+
+		public void EmpezarRecibir()
+		{
+			Servidor.Listen(0);
+            Servidor.BeginAccept(Servidor_NuevaConexion, null);
+		}
+
+		public void PararRecibir()
+		{
+			Servidor.Shutdown(SocketShutdown.Both);
+			Servidor.Close();
+		}
+
+		#region Enviar (Funciones Privadas)
 
 		private static int Enviar_ConectarConDestino(Socket Destino, string IP, ushort PORT)
 		{
@@ -71,5 +97,40 @@ namespace ProyectoFinal.Comun
 			Destino.Shutdown(SocketShutdown.Both);
 			Destino.Close();
 		}
+
+		#endregion
+
+		#region Servidor (Funciones Privadas)
+
+		private void Servidor_NuevaConexion(IAsyncResult AR)
+        {
+            Socket nuevaConexion;
+
+            try { nuevaConexion = Servidor.EndAccept(AR); } catch (ObjectDisposedException) { return; }
+
+			nuevaConexion.BeginReceive(Buffer, 0, MAX_BUFFER_SIZE, SocketFlags.None, Servidor_Recibir, nuevaConexion);
+
+			Servidor.BeginAccept(Servidor_NuevaConexion, null);
+        }
+
+		private void Servidor_Recibir(IAsyncResult AR)
+        {
+            Socket nuevaConexion = (Socket)AR.AsyncState;
+            int numeroBytesRecibidos;
+
+            try { numeroBytesRecibidos = nuevaConexion.EndReceive(AR); } catch (SocketException) { nuevaConexion.Close(); return; }
+
+            byte[] bufferRecibido = new byte[numeroBytesRecibidos];
+            Array.Copy(Buffer, bufferRecibido, numeroBytesRecibidos);
+
+            string textoRecibido = Encoding.ASCII.GetString(bufferRecibido);
+
+			byte[] data = Encoding.ASCII.GetBytes("OK");
+            nuevaConexion.Send(data);
+
+			FuncionAlRecibir();
+        }
+
+		#endregion
 	}
 }
