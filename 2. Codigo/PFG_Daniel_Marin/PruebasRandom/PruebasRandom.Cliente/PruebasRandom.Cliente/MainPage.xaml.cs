@@ -18,16 +18,21 @@ namespace PruebasRandom.Cliente
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class MainPage : ContentPage
 	{
+		private readonly Random random = new();
 
-		private Random random = new();
+		private ControladorRed servidor;
 
-		private ObservableCollection<ListView_Mensaje_Cell> Mensajes = new();
+		private readonly ObservableCollection<ListView_Mensaje_Cell> Mensajes = new();
 
 		public MainPage()
 		{
 			InitializeComponent();
 
 			ListaMensajes.ItemsSource = Mensajes;
+
+			ushort PORT = ushort.Parse(ControladorRed.Enviar("192.168.1.136", 1600, "PedirSiguientePuertoDisponible"));
+
+			servidor = new ControladorRed(Global.GetMiIP_Xamarin(), PORT, CuandoRecibe, true);
 		}
 
 		private void EnviarClicked(object sender, EventArgs args)
@@ -45,6 +50,15 @@ namespace PruebasRandom.Cliente
 			//svr.Send(data, 0, data.Length, SocketFlags.None);
 
 			ControladorRed.Enviar(IP.Text, ushort.Parse(PORT.Text), MensajeEnviar.Text);
+			Mensajes.Add(new ListView_Mensaje_Cell($"C > {MensajeEnviar.Text}"));
+		}
+
+		private void CuandoRecibe(string ipServidor, ushort puertoServidor, string mensaje)
+		{
+			Device.BeginInvokeOnMainThread (() =>
+			{
+				Mensajes.Add(new ListView_Mensaje_Cell($"S > {mensaje}"));
+			});
 		}
 
 		private void Scroll_ListaMensajes_Final()

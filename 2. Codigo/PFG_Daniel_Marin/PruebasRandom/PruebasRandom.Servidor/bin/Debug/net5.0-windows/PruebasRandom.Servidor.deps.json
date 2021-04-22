@@ -7,14 +7,27 @@
   "targets": {
     ".NETCoreApp,Version=v5.0": {
       "PruebasRandom.Servidor/1.0.0": {
+        "dependencies": {
+          "Comun": "1.0.0"
+        },
         "runtime": {
           "PruebasRandom.Servidor.dll": {}
+        }
+      },
+      "Comun/1.0.0": {
+        "runtime": {
+          "Comun.dll": {}
         }
       }
     }
   },
   "libraries": {
     "PruebasRandom.Servidor/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Comun/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

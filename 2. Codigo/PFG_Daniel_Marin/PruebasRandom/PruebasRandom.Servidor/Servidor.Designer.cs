@@ -71,6 +71,7 @@ namespace PruebasRandom
 			// 
 			// MensajeEnviar1
 			// 
+			this.MensajeEnviar1.Enabled = false;
 			this.MensajeEnviar1.Font = new System.Drawing.Font("Roboto Mono", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.MensajeEnviar1.Location = new System.Drawing.Point(12, 519);
 			this.MensajeEnviar1.Name = "MensajeEnviar1";
@@ -80,6 +81,7 @@ namespace PruebasRandom
 			// 
 			// Enviar1
 			// 
+			this.Enviar1.Enabled = false;
 			this.Enviar1.Font = new System.Drawing.Font("Roboto Mono", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
 			this.Enviar1.Location = new System.Drawing.Point(12, 550);
 			this.Enviar1.Name = "Enviar1";
@@ -90,6 +92,7 @@ namespace PruebasRandom
 			// 
 			// Enviar2
 			// 
+			this.Enviar2.Enabled = false;
 			this.Enviar2.Font = new System.Drawing.Font("Roboto Mono", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
 			this.Enviar2.Location = new System.Drawing.Point(259, 550);
 			this.Enviar2.Name = "Enviar2";
@@ -100,6 +103,7 @@ namespace PruebasRandom
 			// 
 			// MensajeEnviar2
 			// 
+			this.MensajeEnviar2.Enabled = false;
 			this.MensajeEnviar2.Font = new System.Drawing.Font("Roboto Mono", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.MensajeEnviar2.Location = new System.Drawing.Point(259, 519);
 			this.MensajeEnviar2.Name = "MensajeEnviar2";
@@ -130,6 +134,7 @@ namespace PruebasRandom
 			// 
 			// Enviar3
 			// 
+			this.Enviar3.Enabled = false;
 			this.Enviar3.Font = new System.Drawing.Font("Roboto Mono", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
 			this.Enviar3.Location = new System.Drawing.Point(506, 550);
 			this.Enviar3.Name = "Enviar3";
@@ -140,6 +145,7 @@ namespace PruebasRandom
 			// 
 			// MensajeEnviar3
 			// 
+			this.MensajeEnviar3.Enabled = false;
 			this.MensajeEnviar3.Font = new System.Drawing.Font("Roboto Mono", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.MensajeEnviar3.Location = new System.Drawing.Point(506, 519);
 			this.MensajeEnviar3.Name = "MensajeEnviar3";
@@ -174,6 +180,7 @@ namespace PruebasRandom
 			this.IP1.Location = new System.Drawing.Point(12, 114);
 			this.IP1.Name = "IP1";
 			this.IP1.PlaceholderText = "000.000.000.000";
+			this.IP1.ReadOnly = true;
 			this.IP1.Size = new System.Drawing.Size(241, 29);
 			this.IP1.TabIndex = 16;
 			this.IP1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -184,6 +191,7 @@ namespace PruebasRandom
 			this.IP2.Location = new System.Drawing.Point(259, 114);
 			this.IP2.Name = "IP2";
 			this.IP2.PlaceholderText = "000.000.000.000";
+			this.IP2.ReadOnly = true;
 			this.IP2.Size = new System.Drawing.Size(241, 29);
 			this.IP2.TabIndex = 17;
 			this.IP2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -194,6 +202,7 @@ namespace PruebasRandom
 			this.IP3.Location = new System.Drawing.Point(506, 114);
 			this.IP3.Name = "IP3";
 			this.IP3.PlaceholderText = "000.000.000.000";
+			this.IP3.ReadOnly = true;
 			this.IP3.Size = new System.Drawing.Size(241, 29);
 			this.IP3.TabIndex = 18;
 			this.IP3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;

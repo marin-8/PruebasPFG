@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net5.0-windows7.0": {}
+    "net5.0-windows7.0": {
+      "Comun/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/Comun.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Comun.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Comun/1.0.0": {
+      "type": "project",
+      "path": "../../ProyectoFinal/Comun/Comun.csproj",
+      "msbuildProject": "../../ProyectoFinal/Comun/Comun.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net5.0-windows7.0": []
+    "net5.0-windows7.0": [
+      "Comun >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\MrSamisack\\.nuget\\packages\\": {},
@@ -38,7 +57,11 @@
       "frameworks": {
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\GitHub\\PFG-DAM\\2. Codigo\\PFG_Daniel_Marin\\ProyectoFinal\\Comun\\Comun.csproj": {
+              "projectPath": "C:\\GitHub\\PFG-DAM\\2. Codigo\\PFG_Daniel_Marin\\ProyectoFinal\\Comun\\Comun.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
+using ProyectoFinal.Comun;
 
 namespace PruebasRandom
 {
@@ -18,12 +19,11 @@ namespace PruebasRandom
 		private string ServerIP;
 		private const int PORT = 1600;
 
-		private const int BUFFER_SIZE = 24;
-		private readonly byte[] buffer = new byte[BUFFER_SIZE];
-
-		private readonly Socket serverSocket = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		private ControladorRed servidor;
 
 		private readonly ClienteControls[] ClientesControls = new ClienteControls[3];
+
+		private readonly List<InfoCliente> InfoClientes = new();
 
 		public Servidor()
 		{
@@ -35,25 +35,12 @@ namespace PruebasRandom
 			Enviar2.Click += new EventHandler( (s,e) => EnviarMensaje(2) );
 			Enviar3.Click += new EventHandler( (s,e) => EnviarMensaje(3) );
 
-			ClientesControls[0] = new(){ IP=IP1, ListaMensajes=ListaMensajes1, MensajeEnviar=MensajeEnviar1 };
-			ClientesControls[1] = new(){ IP=IP2, ListaMensajes=ListaMensajes2, MensajeEnviar=MensajeEnviar2 };
-			ClientesControls[2] = new(){ IP=IP3, ListaMensajes=ListaMensajes3, MensajeEnviar=MensajeEnviar3 };
+			ClientesControls[0] = new(){ IP=IP1, ListaMensajes=ListaMensajes1, MensajeEnviar=MensajeEnviar1, Enviar=Enviar1 };
+			ClientesControls[1] = new(){ IP=IP2, ListaMensajes=ListaMensajes2, MensajeEnviar=MensajeEnviar2, Enviar=Enviar2 };
+			ClientesControls[2] = new(){ IP=IP3, ListaMensajes=ListaMensajes3, MensajeEnviar=MensajeEnviar3, Enviar=Enviar3 };
 		}
 
-		private void Form1_Load(object sender, EventArgs e)
-		{
-			var IPList = from _ in Dns.GetHostEntry(Dns.GetHostName()).AddressList where _.ToString().Contains('.') select _;
-			var HostName = Dns.GetHostEntry(Dns.GetHostName()).HostName;
-			var NetworkInterfaces = from networkAdapter in NetworkInterface.GetAllNetworkInterfaces() select networkAdapter;
-
-			ServerIP = (from ip in GetAdaptadoresDeRedDisponibles() where ip.IPs[0].ToString().Contains("192") select ip.IPs[0]).First();
-			
-			IPServer.Text= $"{ServerIP} : {PORT}";
-
-			ArrancarServidor(ServerIP);
-		}
-
-		private List<AdaptadorDeRed> GetAdaptadoresDeRedDisponibles()
+		private static List<AdaptadorDeRed> GetAdaptadoresDeRedDisponibles()
 		{
 			List<AdaptadorDeRed> adaptadoresDeRedDisponibles = new();
 
@@ -80,83 +67,78 @@ namespace PruebasRandom
 			return adaptadoresDeRedDisponibles;
 		}
 
+		private void Form1_Load(object sender, EventArgs e)
+		{
+			var IPList = from _ in Dns.GetHostEntry(Dns.GetHostName()).AddressList where _.ToString().Contains('.') select _;
+			var HostName = Dns.GetHostEntry(Dns.GetHostName()).HostName;
+			var NetworkInterfaces = from networkAdapter in NetworkInterface.GetAllNetworkInterfaces() select networkAdapter;
+
+			ServerIP = (from ip in GetAdaptadoresDeRedDisponibles() where ip.IPs[0].ToString().Contains("192") select ip.IPs[0]).First();
+			
+			IPServer.Text= $"{ServerIP} : {PORT}";
+
+			servidor = new ControladorRed(ServerIP, PORT, CuandoRecibe, true);
+		}
+
 		private void Form1_Closed(object sender, EventArgs e)
 		{
-			CerrarServidor();
-		}
-
-		private void ArrancarServidor(string IP)
-		{
-            serverSocket.Bind(new IPEndPoint(IPAddress.Parse(IP), PORT));
-
-            serverSocket.Listen(0);
-            serverSocket.BeginAccept(AcceptCallback, null);
-		}
-
-		private void AcceptCallback(IAsyncResult AR)
-        {
-            Socket newClientSocket;
-
-            try { newClientSocket = serverSocket.EndAccept(AR); } catch (ObjectDisposedException) { return; }
-
-			newClientSocket.BeginReceive(buffer, 0, BUFFER_SIZE, SocketFlags.None, ReceiveCallback, newClientSocket);
-
-			serverSocket.BeginAccept(AcceptCallback, null);
-        }
-
-		private void ReceiveCallback(IAsyncResult AR)
-        {
-            Socket socketCliente = (Socket)AR.AsyncState;
-            int numeroBytesRecibidos;
-
-            try { numeroBytesRecibidos = socketCliente.EndReceive(AR); } catch (SocketException) { socketCliente.Close(); return; }
-
-            byte[] bufferRecibido = new byte[numeroBytesRecibidos];
-            Array.Copy(buffer, bufferRecibido, numeroBytesRecibidos);
-
-            string textoRecibido = Encoding.ASCII.GetString(bufferRecibido);
-			string enviante = ((IPEndPoint)socketCliente.RemoteEndPoint).ToString();
-
-			//socketCliente.Shutdown(SocketShutdown.Both);
-   //         socketCliente.Close();
-
-			byte[] data = Encoding.ASCII.GetBytes("OK");
-            socketCliente.Send(data);
-
-			Invoke(new Action( () =>
-				ListaMensajes1.Items.Add($"{enviante.Substring(0, enviante.IndexOf(':'))}: {textoRecibido}") ));
-        }
-
-		private void CerrarServidor()
-		{
-            serverSocket.Close();
+			servidor.Cerrar();
 		}
 
 		private void EnviarMensaje(int cliente)
 		{
-			string mensaje = ClientesControls[cliente-1].MensajeEnviar.Text;
+			//  TODO - Peta cuando intento enviar al móvil de mi madre
 
-			if (mensaje.Equals("")) return;
+			string mensajeEnviar = ClientesControls[cliente-1].MensajeEnviar.Text;
 
-			if(mensaje.Length > 24) mensaje = mensaje.Substring(0, 24);
+			ControladorRed.Enviar
+			(
+				ClientesControls[cliente-1].IP.Text,
+				InfoClientes[cliente-1].PORT,
+				ClientesControls[cliente-1].MensajeEnviar.Text
+			);
 
-			Socket svr = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-			svr.Connect(IPAddress.Parse(ClientesControls[cliente-1].IP.Text), PORT);
-
-			byte[] data = Encoding.ASCII.GetBytes(mensaje);
-
-			svr.Send(data, 0, data.Length, SocketFlags.None);
-
-			svr.Shutdown(SocketShutdown.Both);
-            svr.Close();
+			ClientesControls[cliente-1].ListaMensajes.Items.Add($"S > {mensajeEnviar}");
 		}
+
+		private void CuandoRecibe(string ipCliente, ushort puertoCliente, string mensaje)
+		{
+			if(InfoClientes.Count < 3)
+			{
+				Invoke(new Action(() =>
+				{ 
+					if(!InfoClientes.Select(ic => ic.IP).Contains(ipCliente))
+					{
+						InfoClientes.Add(new InfoCliente() { IP=ipCliente, PORT=puertoCliente });
+
+						ClientesControls[InfoClientes.Count-1].IP.Text = ipCliente;
+						ClientesControls[InfoClientes.Count-1].ListaMensajes.Items.Add($"C > {mensaje}");
+
+						ClientesControls[InfoClientes.Count-1].MensajeEnviar.Enabled = true;
+						ClientesControls[InfoClientes.Count-1].Enviar.Enabled = true;
+					}
+					else
+					{
+						ClientesControls[InfoClientes.Select(ic => ic.IP).ToList().IndexOf(ipCliente)].ListaMensajes.Items.Add($"C > {mensaje}");
+					}
+				}));
+			}
+		}
+	}
+
+	public struct InfoCliente
+	{
+		public string IP;
+		public ushort PORT;
 	}
 
 	public struct ClienteControls
 	{
 		public TextBox IP;
+
 		public ListBox ListaMensajes;
 		public TextBox MensajeEnviar;
+		public Button Enviar;
 	}
 
 	public class AdaptadorDeRed
