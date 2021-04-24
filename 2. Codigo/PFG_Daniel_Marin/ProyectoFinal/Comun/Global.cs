@@ -43,7 +43,10 @@ namespace ProyectoFinal.Comun
 
 		public static string GetMiIP_Xamarin()
 		{
-			return Dns.GetHostAddresses(Dns.GetHostName()).First().ToString();
+			return Dns.GetHostAddresses(Dns.GetHostName())
+				   .Where(IP => IP.ToString().Contains("192.168"))
+				   .First()
+				   .ToString();
 		}
 	}
 }

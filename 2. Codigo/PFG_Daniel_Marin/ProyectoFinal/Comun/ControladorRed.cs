@@ -13,11 +13,9 @@ namespace ProyectoFinal.Comun
 
 		private readonly byte[] Buffer = new byte[MAX_BUFFER_SIZE];
 
-		private readonly Socket Servidor = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		private readonly Socket Servidor;
 
 		private readonly Action<string,string> FuncionAlRecibir;
-
-		private int SiguientePuertoLibre = 1601;
 
 		public static string Enviar(string IP, ushort PORT, string Mensaje)
 		{
@@ -33,7 +31,9 @@ namespace ProyectoFinal.Comun
 
 		public ControladorRed(string IP, ushort PORT, Action<string,string> FuncionAlRecibir, bool EmpezarRecibir)
 		{
+			Servidor = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			Servidor.Bind(new IPEndPoint(IPAddress.Parse(IP), PORT));
+
 			this.FuncionAlRecibir = FuncionAlRecibir;
 			
 			if(EmpezarRecibir) this.EmpezarRecibir();
@@ -41,7 +41,7 @@ namespace ProyectoFinal.Comun
 
 		public void EmpezarRecibir()
 		{
-			Servidor.Listen(0);
+			Servidor.Listen((int)SocketOptionName.MaxConnections);
             Servidor.BeginAccept(Servidor_NuevaConexion, null);
 		}
 
