@@ -15,7 +15,7 @@ namespace ProyectoFinal.Comun
 
 		private readonly Socket Servidor = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-		private readonly Action<string,ushort,string> FuncionAlRecibir;
+		private readonly Action<string,string> FuncionAlRecibir;
 
 		private int SiguientePuertoLibre = 1601;
 
@@ -31,7 +31,7 @@ namespace ProyectoFinal.Comun
 			return respuestaDelServidor;
 		}
 
-		public ControladorRed(string IP, ushort PORT, Action<string,ushort,string> FuncionAlRecibir, bool EmpezarRecibir)
+		public ControladorRed(string IP, ushort PORT, Action<string,string> FuncionAlRecibir, bool EmpezarRecibir)
 		{
 			Servidor.Bind(new IPEndPoint(IPAddress.Parse(IP), PORT));
 			this.FuncionAlRecibir = FuncionAlRecibir;
@@ -128,27 +128,12 @@ namespace ProyectoFinal.Comun
 
             string mensajeRecibido = Encoding.ASCII.GetString(bufferRecibido);
 
-			string respuesta;
-			IPEndPoint clienteInfo = (IPEndPoint)cliente.RemoteEndPoint;
-			ushort puertoCliente;
-
-			if(mensajeRecibido.Equals("PedirSiguientePuertoDisponible"))
-			{
-				respuesta = SiguientePuertoLibre++.ToString();
-				puertoCliente = ushort.Parse(respuesta);
-			}
-			else
-			{
-				respuesta = "OK";
-				puertoCliente = (ushort)clienteInfo.Port;
-			}
-
-			byte[] data = Encoding.ASCII.GetBytes(respuesta);
+			byte[] data = Encoding.ASCII.GetBytes("OK");
             cliente.Send(data);
 
+			IPEndPoint clienteInfo = (IPEndPoint)cliente.RemoteEndPoint;
 			string ipCliente = clienteInfo.Address.ToString();
-			//ushort puertoCliente = (ushort)clienteInfo.Port;
-			FuncionAlRecibir(ipCliente, puertoCliente, mensajeRecibido);
+			FuncionAlRecibir(ipCliente, mensajeRecibido);
         }
 
 		#endregion

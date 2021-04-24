@@ -30,34 +30,23 @@ namespace PruebasRandom.Cliente
 
 			ListaMensajes.ItemsSource = Mensajes;
 
-			ushort PORT = ushort.Parse(ControladorRed.Enviar("192.168.1.136", 1600, "PedirSiguientePuertoDisponible"));
-
-			servidor = new ControladorRed(Global.GetMiIP_Xamarin(), PORT, CuandoRecibe, true);
+			servidor = new ControladorRed(Global.GetMiIP_Xamarin(), 1600, CuandoRecibe, true);
 		}
 
 		private void EnviarClicked(object sender, EventArgs args)
 		{
-			//string mensaje = MensajeEnviar.Text;
-
-			//if (mensaje.Equals("")) return;
-			//if (mensaje.Length > 24) mensaje = mensaje.Substring(0, 24);
-
-			//byte[] data = Encoding.ASCII.GetBytes(mensaje);
-
-			//Socket svr = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-			//svr.Connect(IPAddress.Parse(IP.Text), int.Parse(PORT.Text));
-
-			//svr.Send(data, 0, data.Length, SocketFlags.None);
-
 			ControladorRed.Enviar(IP.Text, ushort.Parse(PORT.Text), MensajeEnviar.Text);
+
 			Mensajes.Add(new ListView_Mensaje_Cell($"C > {MensajeEnviar.Text}"));
+			Scroll_ListaMensajes_Final();
 		}
 
-		private void CuandoRecibe(string ipServidor, ushort puertoServidor, string mensaje)
+		private void CuandoRecibe(string ipServidor, string mensaje)
 		{
 			Device.BeginInvokeOnMainThread (() =>
 			{
 				Mensajes.Add(new ListView_Mensaje_Cell($"S > {mensaje}"));
+				Scroll_ListaMensajes_Final();
 			});
 		}
 

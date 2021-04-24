@@ -4,3 +4,10 @@
         Waiterio
         Loyverse TPV      
 
+    Youtube:
+    
+        https://youtu.be/Bq1JhTHlxek
+        
+    GitHub:
+    
+        https://github.com/AbleOpus/NetworkingSamples

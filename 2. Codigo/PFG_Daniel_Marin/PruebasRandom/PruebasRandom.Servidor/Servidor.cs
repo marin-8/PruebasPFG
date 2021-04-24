@@ -94,14 +94,14 @@ namespace PruebasRandom
 			ControladorRed.Enviar
 			(
 				ClientesControls[cliente-1].IP.Text,
-				InfoClientes[cliente-1].PORT,
+				PORT,
 				ClientesControls[cliente-1].MensajeEnviar.Text
 			);
 
 			ClientesControls[cliente-1].ListaMensajes.Items.Add($"S > {mensajeEnviar}");
 		}
 
-		private void CuandoRecibe(string ipCliente, ushort puertoCliente, string mensaje)
+		private void CuandoRecibe(string ipCliente, string mensaje)
 		{
 			if(InfoClientes.Count < 3)
 			{
@@ -109,7 +109,7 @@ namespace PruebasRandom
 				{ 
 					if(!InfoClientes.Select(ic => ic.IP).Contains(ipCliente))
 					{
-						InfoClientes.Add(new InfoCliente() { IP=ipCliente, PORT=puertoCliente });
+						InfoClientes.Add(new InfoCliente() { IP=ipCliente });
 
 						ClientesControls[InfoClientes.Count-1].IP.Text = ipCliente;
 						ClientesControls[InfoClientes.Count-1].ListaMensajes.Items.Add($"C > {mensaje}");
